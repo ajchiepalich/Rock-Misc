@@ -1,0 +1,77 @@
+<div class="vertical-marquee-wrapper">
+  <div class="vertical-marquee">
+    <div class="vertical-marquee-track" id="verticalMarqueeTrack"></div>
+  </div>
+</div>
+
+<style>
+  .vertical-marquee-wrapper {
+    padding: 0 20px;
+  }
+
+  .vertical-marquee {
+    height: 700px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 20px;
+  }
+
+  .vertical-marquee-track {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: vertical-scroll-reverse 140s linear infinite;
+  }
+
+  .vertical-marquee img {
+    width: 100%;
+    display: block;
+    border-radius: 20px;
+    object-fit: cover;
+  }
+
+  @keyframes vertical-scroll-reverse {
+    from {
+      transform: translateY(calc(-50% - 10px));
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  const marqueeImages = [
+    "/assets/marquee-image-01.jpg",
+    "/assets/marquee-image-02.jpg",
+    "/assets/marquee-image-03.jpg",
+    "/assets/marquee-image-04.jpg",
+    "/assets/marquee-image-05.jpg",
+    "/assets/marquee-image-06.jpg",
+    "/assets/marquee-image-07.jpg",
+    "/assets/marquee-image-08.jpg"
+  ];
+
+  function shuffleArray(array) {
+    return [...array].sort(() => Math.random() - 0.5);
+  }
+
+  const shuffledImages = shuffleArray(marqueeImages);
+  const track = document.getElementById("verticalMarqueeTrack");
+
+  function renderImages(images) {
+    images.forEach(src => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      img.loading = "lazy";
+      track.appendChild(img);
+    });
+  }
+
+  renderImages(shuffledImages);
+  renderImages(shuffledImages);
+</script>
