@@ -1,1 +1,106 @@
 
+# Dashboard Quick Links
+
+A lightweight dashboard navigation component for Rock RMS pages.
+
+## Features
+
+* Modern card-style links
+* Responsive layout
+* Optional Font Awesome icons
+* Hover animations
+* Rounded corners and subtle shadows
+* Easy customization
+
+## Preview
+
+Each link renders as a card with:
+
+* Title
+* Optional icon
+* Directional arrow
+* Hover state
+
+Ideal for:
+
+* Dashboards
+* Staff portals
+* Team workspaces
+* Ministry landing pages
+
+## Installation
+
+1. Add an HTML Content block to your page.
+2. Paste the component HTML and CSS.
+3. Update the placeholder URLs.
+4. Save and publish.
+
+## Customization
+
+### Update Link Destinations
+
+Replace:
+
+```html
+href="/dashboard-1"
+```
+
+with your destination URL.
+
+### Change Link Labels
+
+Replace:
+
+```html
+Dashboard Link
+```
+
+with your preferred label.
+
+### Add Icons
+
+Example:
+
+```html
+<i class="fa fa-bell"></i>
+```
+
+Common icons:
+
+```html
+<i class="fa fa-home"></i>
+<i class="fa fa-bar-chart"></i>
+<i class="fa fa-users"></i>
+<i class="fa fa-bell"></i>
+<i class="fa fa-flag-o"></i>
+```
+
+### Adjust Card Height
+
+```css
+min-height: 72px;
+```
+
+### Adjust Corner Radius
+
+```css
+border-radius: 16px;
+```
+
+### Adjust Spacing
+
+```css
+gap: 12px;
+```
+
+## Dependencies
+
+Optional:
+
+* Font Awesome (for icons)
+
+The component works without Font Awesome if icon elements are removed.
+
+## License
+
+Use, modify, and distribute freely within your Rock RMS projects.
