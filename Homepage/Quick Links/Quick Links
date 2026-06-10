@@ -1,0 +1,86 @@
+<div class="dashboard-links-wrapper">
+  <div class="dashboard-links">
+
+    <a class="dashboard-link" href="/dashboard-1">
+      <span>Dashboard Link</span>
+      <span class="dashboard-arrow">→</span>
+    </a>
+
+    <a class="dashboard-link" href="/dashboard-2">
+      <span>Metrics Dashboard</span>
+      <span class="dashboard-arrow">→</span>
+    </a>
+
+    <a class="dashboard-link" href="/dashboard-3">
+      <span>Connections Dashboard</span>
+      <span class="dashboard-arrow">→</span>
+    </a>
+
+    <a class="dashboard-link" href="/reminders">
+      <span>
+        <i class="fa fa-bell"></i>
+        Reminders
+      </span>
+      <span class="dashboard-arrow">→</span>
+    </a>
+
+    <a class="dashboard-link" href="/following">
+      <span>
+        <i class="fa fa-flag-o"></i>
+        Following List
+      </span>
+      <span class="dashboard-arrow">→</span>
+    </a>
+
+  </div>
+</div>
+
+<style>
+  .dashboard-links-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .dashboard-links {
+    display: grid;
+    gap: 12px;
+    padding: 4px 20px;
+  }
+
+  .dashboard-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 12px 20px;
+    min-height: 72px;
+
+    border-radius: 16px;
+    background: #ffffff;
+
+    color: #222222;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .dashboard-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+  }
+
+  .dashboard-link i {
+    margin-right: 12px;
+  }
+
+  .dashboard-arrow {
+    font-size: 24px;
+    line-height: 1;
+  }
+</style>
