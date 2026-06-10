@@ -1,0 +1,124 @@
+<div class="hero-banner-wrapper">
+  <div class="hero-banner">
+    <img
+      id="heroBannerImage"
+      src=""
+      alt="Banner Background"
+      class="hero-banner-image"
+    />
+
+    <div class="hero-banner-blur"></div>
+
+    <div class="hero-banner-overlay">
+      {% assign currentHour = 'Now' | Date:'H' | AsInteger %}
+      {% assign nickname = CurrentPerson.NickName | Default:CurrentPerson.FirstName | Default:'there' %}
+
+      {% if currentHour < 12 %}
+        {% assign greeting = 'Good morning' %}
+      {% elseif currentHour < 17 %}
+        {% assign greeting = 'Good afternoon' %}
+      {% else %}
+        {% assign greeting = 'Good evening' %}
+      {% endif %}
+
+      <h1 class="hero-banner-title">
+        {{ greeting }}, {{ nickname }}!
+      </h1>
+
+      <p class="hero-banner-subtitle">
+        Empowering ministry through connection.
+      </p>
+    </div>
+  </div>
+</div>
+
+<style>
+  .hero-banner-wrapper {
+    padding: 20px;
+  }
+
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 24px;
+  }
+
+  .hero-banner-image {
+    width: 100%;
+    height: 205px;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.05);
+  }
+
+  .hero-banner-blur {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .hero-banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .hero-banner-title {
+    color: #ffffff;
+    font-size: 44px;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.1;
+    text-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+  }
+
+  .hero-banner-subtitle {
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 17px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  @media (max-width: 768px) {
+    .hero-banner-wrapper {
+      padding: 16px;
+    }
+
+    .hero-banner-image {
+      height: 145px;
+    }
+
+    .hero-banner-title {
+      font-size: 30px;
+    }
+
+    .hero-banner-subtitle {
+      font-size: 15px;
+    }
+  }
+</style>
+
+<script>
+  const heroImages = [
+    "/assets/hero-banner-01.jpg",
+    "/assets/hero-banner-02.jpg",
+    "/assets/hero-banner-03.jpg",
+    "/assets/hero-banner-04.jpg",
+    "/assets/hero-banner-05.jpg"
+  ];
+
+  const randomImage =
+    heroImages[Math.floor(Math.random() * heroImages.length)];
+
+  document.getElementById("heroBannerImage").src = randomImage;
+</script>
