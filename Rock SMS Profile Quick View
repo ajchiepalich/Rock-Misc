@@ -1,0 +1,686 @@
+<style>
+  :root {
+    --hc-navy: #06475f;
+    --hc-blue: #3b86c7;
+    --hc-link-blue: #3b86c7;
+    --hc-teal: #004c3f;
+    --hc-green: #2f8f7b;
+    --hc-orange: #f89a2d;
+
+    --hc-red: #ef4444;
+    --hc-red-dark: #b91c1c;
+    --hc-red-bg: #fff1f1;
+
+    --hc-yellow: #eab308;
+    --hc-yellow-dark: #854d0e;
+    --hc-yellow-bg: #fff8db;
+
+    --hc-card-bg: #ffffff;
+    --hc-card-border: #d7e1ea;
+    --hc-text: #17202a;
+    --hc-muted: #8a94a3;
+  }
+
+  .sms-person-wrapper {
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.3;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .sms-person-more {
+    display: block;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .sms-person-more > summary {
+    cursor: pointer;
+    display: inline-grid;
+    grid-template-columns: minmax(0, auto) 24px;
+    align-items: center;
+    gap: 5px;
+    list-style: none;
+    color: var(--hc-text);
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .sms-person-more > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sms-person-header-main {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    color: var(--hc-text);
+  }
+
+  .sms-person-header-main a,
+  .sms-person-card a {
+    color: var(--hc-link-blue) !important;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .sms-person-header-main a {
+    display: inline-block;
+    min-width: 0;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sms-person-header-main a:hover,
+  .sms-person-card a:hover {
+    color: var(--hc-link-blue) !important;
+    text-decoration: underline;
+  }
+
+  .sms-person-meta {
+    flex: 0 0 auto;
+    color: var(--hc-muted);
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+
+  .sms-person-more-label {
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hc-blue);
+    border-radius: 999px;
+    background: rgba(59, 134, 199, 0.1);
+    transition: transform 0.15s ease, background 0.15s ease, color 0.15s ease;
+    flex: 0 0 24px;
+  }
+
+  .sms-person-more-label svg {
+    width: 17px;
+    height: 17px;
+    fill: currentColor;
+    transition: transform 0.15s ease;
+  }
+
+  .sms-person-more > summary:hover .sms-person-more-label,
+  .sms-person-more > summary:focus .sms-person-more-label {
+    background: rgba(59, 134, 199, 0.16);
+    color: var(--hc-navy);
+  }
+
+  .sms-person-more[open] .sms-person-more-label svg {
+    transform: rotate(90deg);
+  }
+
+  .sms-person-card {
+    display: block;
+    position: relative;
+    overflow: visible;
+    background: var(--hc-card-bg);
+    border: 1px solid var(--hc-card-border);
+    border-left: 3px solid var(--hc-blue);
+    border-radius: 12px;
+    padding: 14px 15px;
+    margin-top: 9px;
+    color: var(--hc-text);
+    box-shadow: 0 4px 12px rgba(6, 71, 95, 0.06);
+    max-width: 390px;
+  }
+
+  .sms-person-demographics {
+    color: var(--hc-muted);
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+
+  .sms-person-campus {
+    color: var(--hc-navy);
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 7px;
+  }
+
+  .sms-person-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .sms-person-pill {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 3px 9px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.2;
+    background: rgba(59, 134, 199, 0.1);
+    color: var(--hc-blue);
+    border: 1px solid rgba(59, 134, 199, 0.22);
+  }
+
+  .sms-person-pill.visitor {
+    background: rgba(248, 154, 45, 0.12);
+    color: #995200;
+    border-color: rgba(248, 154, 45, 0.28);
+  }
+
+  .sms-person-pill.member {
+    background: rgba(47, 143, 123, 0.12);
+    color: var(--hc-teal);
+    border-color: rgba(47, 143, 123, 0.28);
+  }
+
+  .sms-person-pill.married {
+    background: rgba(59, 134, 199, 0.1);
+    color: var(--hc-blue);
+    border-color: rgba(59, 134, 199, 0.22);
+  }
+
+  .sms-person-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 8px;
+    position: relative;
+  }
+
+  .sms-person-action-link {
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--hc-blue) !important;
+    text-decoration: none !important;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.12s ease, color 0.12s ease, opacity 0.12s ease;
+  }
+
+  .sms-person-action-link:hover,
+  .sms-person-action-link:focus {
+    color: var(--hc-navy) !important;
+    transform: translateY(-1px);
+    opacity: 0.92;
+    outline: none;
+  }
+
+  .sms-person-action-link svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+
+  .sms-person-flag-btn {
+    appearance: none;
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--hc-red);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: static;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.12s ease, opacity 0.12s ease;
+  }
+
+  .sms-person-flag-btn.yellow {
+    color: var(--hc-yellow);
+  }
+
+  .sms-person-flag-btn:hover,
+  .sms-person-flag-btn:focus,
+  .sms-person-flag-btn.is-open {
+    background: transparent;
+    transform: translateY(-1px);
+    opacity: 0.92;
+    outline: none;
+  }
+
+  .sms-person-flag-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+
+  .sms-person-flag-popover {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 7px);
+    z-index: 9999;
+    width: 100%;
+    min-width: 260px;
+    max-width: calc(100vw - 36px);
+    padding: 10px 12px;
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(23, 32, 42, 0.18);
+    text-align: left;
+    line-height: 1.35;
+    font-size: 13px;
+    font-weight: 750;
+  }
+
+  .sms-person-flag-btn.red .sms-person-flag-popover {
+    background: var(--hc-red-bg);
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    color: var(--hc-red-dark);
+  }
+
+  .sms-person-flag-btn.yellow .sms-person-flag-popover {
+    background: var(--hc-yellow-bg);
+    border: 1px solid rgba(234, 179, 8, 0.4);
+    color: var(--hc-yellow-dark);
+  }
+
+  .sms-person-flag-btn:hover .sms-person-flag-popover,
+  .sms-person-flag-btn:focus .sms-person-flag-popover,
+  .sms-person-flag-btn.is-open .sms-person-flag-popover {
+    display: block;
+  }
+
+  .sms-person-flag-label {
+    display: block;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-bottom: 4px;
+  }
+
+  .sms-person-section {
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid #dde5ed;
+  }
+
+  .sms-person-section-title {
+    font-size: 11px;
+    font-weight: 900;
+    color: var(--hc-navy);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 10px;
+  }
+
+  .sms-person-step {
+    margin-bottom: 12px;
+  }
+
+  .sms-person-step:last-child {
+    margin-bottom: 0;
+  }
+
+  .sms-person-step-primary {
+    font-size: 14px;
+    font-weight: 850;
+    color: var(--hc-text);
+    line-height: 1.3;
+  }
+
+  .sms-person-step-meta {
+    color: var(--hc-muted);
+    font-style: italic;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .sms-person-step-status {
+    color: var(--hc-green);
+    font-style: italic;
+    font-weight: 850;
+  }
+
+  .sms-person-footer {
+    margin-top: 13px;
+    padding-top: 11px;
+    border-top: 1px solid #dde5ed;
+    color: var(--hc-muted);
+    font-style: italic;
+    font-weight: 700;
+  }
+
+  @media (max-width: 480px) {
+    .sms-person-wrapper {
+      font-size: 13px;
+      line-height: 1.25;
+    }
+
+    .sms-person-header-main a {
+      max-width: 110px;
+    }
+
+    .sms-person-meta {
+      font-size: 11px;
+    }
+
+    .sms-person-more > summary {
+      grid-template-columns: minmax(0, auto) 22px;
+      gap: 4px;
+    }
+
+    .sms-person-more-label {
+      width: 22px;
+      height: 22px;
+      flex-basis: 22px;
+    }
+
+    .sms-person-more-label svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .sms-person-card {
+      max-width: 180px;
+      padding: 12px 13px;
+      font-size: 13px;
+    }
+
+    .sms-person-campus {
+      font-size: 14px;
+    }
+
+    .sms-person-pill {
+      font-size: 11px;
+      padding: 3px 8px;
+    }
+
+    .sms-person-action-link,
+    .sms-person-flag-btn {
+      width: 24px;
+      height: 24px;
+    }
+
+    .sms-person-action-link svg,
+    .sms-person-flag-btn svg {
+      width: 19px;
+      height: 19px;
+    }
+
+    .sms-person-flag-popover {
+      width: calc(100vw - 48px);
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .sms-person-header-main a {
+      max-width: 92px;
+    }
+
+    .sms-person-meta {
+      font-size: 10px;
+    }
+
+    .sms-person-card {
+      max-width: 170px;
+    }
+  }
+</style>
+
+<div class="sms-person-wrapper">
+  <details class="sms-person-more">
+    <summary>
+      <span class="sms-person-header-main">
+        <a href="/Person/{{ Person.Id }}">{{ Person.FullName }}</a>
+
+        <span class="sms-person-meta">
+          {% if Person.Gender %}
+            {{ Person.Gender | Slice:0,1 }}{% if Person.Age %} · {{ Person.Age }}{% endif %}
+          {% elseif Person.Age %}
+            {{ Person.Age }}
+          {% endif %}
+        </span>
+      </span>
+
+      <span class="sms-person-more-label" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41Z"></path>
+        </svg>
+      </span>
+    </summary>
+
+    <div class="sms-person-card">
+
+      {% if Person.PrimaryCampus.Name %}
+        <div class="sms-person-campus">
+          {{ Person.PrimaryCampus.Name }}
+        </div>
+      {% elseif Person.Campus.Name %}
+        <div class="sms-person-campus">
+          {{ Person.Campus.Name }}
+        </div>
+      {% endif %}
+
+      {% if Person.Gender or Person.Age %}
+        <div class="sms-person-demographics">
+          {% if Person.Gender %}
+            {{ Person.Gender }}{% if Person.Age %}, {{ Person.Age }}{% endif %}
+          {% elseif Person.Age %}
+            Age {{ Person.Age }}
+          {% endif %}
+        </div>
+      {% endif %}
+
+      <div class="sms-person-status-row">
+        {% if Person.ConnectionStatusValue.Value %}
+          <span class="sms-person-pill {{ Person.ConnectionStatusValue.Value | Downcase }}">
+            {{ Person.ConnectionStatusValue.Value }}
+          </span>
+        {% endif %}
+
+        {% if Person.MaritalStatusValue.Value %}
+          <span class="sms-person-pill {{ Person.MaritalStatusValue.Value | Downcase }}">
+            {{ Person.MaritalStatusValue.Value }}
+          </span>
+        {% endif %}
+      </div>
+
+      {% sql return:'flagNotes' %}
+        SELECT
+          nt.Name AS NoteTypeName,
+          n.Text AS NoteText,
+          n.CreatedDateTime
+        FROM Note n
+        INNER JOIN NoteType nt ON nt.Id = n.NoteTypeId
+        WHERE n.EntityId = {{ Person.Id }}
+          AND nt.Name IN ('Red Flag', 'Yellow Flag')
+          AND n.Text IS NOT NULL
+          AND n.Text <> ''
+          AND n.IsAlert = 1
+        ORDER BY
+          CASE
+            WHEN nt.Name = 'Red Flag' THEN 1
+            WHEN nt.Name = 'Yellow Flag' THEN 2
+            ELSE 3
+          END,
+          n.CreatedDateTime DESC
+      {% endsql %}
+
+      <div class="sms-person-actions">
+        {% if Person.Email %}
+          <a
+            class="sms-person-action-link"
+            href="mailto:{{ Person.Email }}"
+            aria-label="Email {{ Person.FullName }}"
+            title="Email {{ Person.Email }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"></path>
+            </svg>
+          </a>
+        {% endif %}
+
+        {% if Person.PhoneNumbers and Person.PhoneNumbers != empty %}
+          {% for phone in Person.PhoneNumbers %}
+            {% if phone.IsMessagingEnabled %}
+              {% if phone.NumberFormatted %}
+                {% assign phoneDisplay = phone.NumberFormatted %}
+              {% else %}
+                {% assign phoneDisplay = phone.Number %}
+              {% endif %}
+
+              <a
+                class="sms-person-action-link"
+                href="tel:{{ phone.Number }}"
+                aria-label="Call {{ Person.FullName }}{% if phone.NumberTypeValue.Value %} {{ phone.NumberTypeValue.Value }}{% endif %}"
+                title="Call {{ phoneDisplay }}{% if phone.NumberTypeValue.Value %} - {{ phone.NumberTypeValue.Value }}{% endif %}">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.61 21 3 13.39 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.24.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2Z"></path>
+                </svg>
+              </a>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+
+        {% if flagNotes and flagNotes != empty %}
+          {% for note in flagNotes %}
+            {% assign noteType = note.NoteTypeName | Downcase %}
+
+            {% if noteType == 'red flag' %}
+              <button
+                type="button"
+                class="sms-person-flag-btn red"
+                aria-label="Show red flag note"
+                title="Red Flag">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 21c-.55 0-1-.45-1-1V5.4c0-.42.26-.79.65-.94 1.42-.55 2.83-.75 4.23-.6 1.09.12 2.02.39 2.82.63.88.26 1.59.47 2.35.47.92 0 1.92-.27 3.1-.96.31-.18.69-.18 1 0 .31.18.5.51.5.87v9.6c0 .34-.17.66-.46.84-1.46.93-2.79 1.31-4.02 1.31-1.09 0-2.02-.28-2.86-.53-.86-.26-1.59-.48-2.39-.48-.9 0-1.89.27-3.02.93V20c0 .55-.45 1-1 1Z"></path>
+                </svg>
+
+                <span class="sms-person-flag-popover">
+                  <span class="sms-person-flag-label">Red Flag</span>
+                  {{ note.NoteText }}
+                </span>
+              </button>
+            {% elseif noteType == 'yellow flag' %}
+              <button
+                type="button"
+                class="sms-person-flag-btn yellow"
+                aria-label="Show yellow flag note"
+                title="Yellow Flag">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 21c-.55 0-1-.45-1-1V5.4c0-.42.26-.79.65-.94 1.42-.55 2.83-.75 4.23-.6 1.09.12 2.02.39 2.82.63.88.26 1.59.47 2.35.47.92 0 1.92-.27 3.1-.96.31-.18.69-.18 1 0 .31.18.5.51.5.87v9.6c0 .34-.17.66-.46.84-1.46.93-2.79 1.31-4.02 1.31-1.09 0-2.02-.28-2.86-.53-.86-.26-1.59-.48-2.39-.48-.9 0-1.89.27-3.02.93V20c0 .55-.45 1-1 1Z"></path>
+                </svg>
+
+                <span class="sms-person-flag-popover">
+                  <span class="sms-person-flag-label">Yellow Flag</span>
+                  {{ note.NoteText }}
+                </span>
+              </button>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {% sql return:'recentSteps' %}
+        SELECT TOP 3
+          st.Name AS StepName,
+          ss.Name AS StatusName,
+          COALESCE(s.CompletedDateTime, s.EndDateTime, s.StartDateTime, s.CreatedDateTime) AS StepDate
+        FROM Step s
+        INNER JOIN PersonAlias pa ON pa.Id = s.PersonAliasId
+        INNER JOIN StepType st ON st.Id = s.StepTypeId
+        INNER JOIN StepProgram sp ON sp.Id = st.StepProgramId
+        LEFT JOIN StepStatus ss ON ss.Id = s.StepStatusId
+        WHERE pa.PersonId = {{ Person.Id }}
+          AND sp.Id = 3
+        ORDER BY COALESCE(s.CompletedDateTime, s.EndDateTime, s.StartDateTime, s.CreatedDateTime) DESC
+      {% endsql %}
+
+      {% if recentSteps and recentSteps != empty %}
+        <div class="sms-person-section">
+          <div class="sms-person-section-title">Recent Steps</div>
+
+          {% for step in recentSteps %}
+            <div class="sms-person-step">
+              <div class="sms-person-step-primary">
+                {{ step.StepName }}
+              </div>
+
+              <div class="sms-person-step-meta">
+                {% if step.StatusName %}
+                  <span class="sms-person-step-status">{{ step.StatusName }}</span>
+                {% endif %}
+
+                {% if step.StepDate %}
+                  {% if step.StatusName %} · {% endif %}
+                  {{ step.StepDate | Date:'MMM d, yyyy' }}
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if Person.CreatedDateTime %}
+        <div class="sms-person-footer">
+          Record Created {{ Person.CreatedDateTime | Date:'MMM d, yyyy' }}
+        </div>
+      {% endif %}
+
+    </div>
+  </details>
+</div>
+
+<script>
+  (function () {
+    if (window.smsPersonFlagActionsInitialized) {
+      return;
+    }
+
+    window.smsPersonFlagActionsInitialized = true;
+
+    function closeOtherFlagPopovers(currentButton) {
+      var openButtons = document.querySelectorAll('.sms-person-flag-btn.is-open');
+
+      for (var i = 0; i < openButtons.length; i++) {
+        if (openButtons[i] !== currentButton) {
+          openButtons[i].classList.remove('is-open');
+        }
+      }
+    }
+
+    document.addEventListener('click', function (event) {
+      var flagButton = event.target.closest('.sms-person-flag-btn');
+
+      if (flagButton) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        closeOtherFlagPopovers(flagButton);
+        flagButton.classList.toggle('is-open');
+
+        return;
+      }
+
+      closeOtherFlagPopovers(null);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') {
+        closeOtherFlagPopovers(null);
+      }
+    });
+  })();
+</script>
